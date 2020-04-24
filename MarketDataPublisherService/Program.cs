@@ -11,14 +11,15 @@ namespace MarketDataPublisherService
 		{
 			var host = CreateHostBuilder(args).Build();
 
-			using (var serviceScope = host.Services.CreateScope())
-			{
-				var services = serviceScope.ServiceProvider;
+			//using (var serviceScope = host.Services.CreateScope())
+			//{
+			//	var services = serviceScope.ServiceProvider;
 
-				var MarketDataService = services.GetRequiredService<MarketDataService>();
+			//	// get marketdataservice intance from dependency injection container 
+			//	var MarketDataService = services.GetRequiredService<MarketDataService>();
 
-				Task.Run(()=>MarketDataService.UpdateMarketData());
-			}
+			//	Task.Run(()=>MarketDataService.UpdateMarketData());
+			//}
 
 			host.Run();
 		}

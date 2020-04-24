@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using MarketDataPublisherService.Hubs;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Threading.Tasks;
 
@@ -7,10 +8,14 @@ namespace MarketDataPublisherService
 
 	//Don't store state in a property on the hub class. 
 	//Every hub method call is executed on a new hub instance.
-	public class MarketDataHub : Hub
+	public class MarketDataHub : Hub<IMarketDataClient>
 	{
+		public async Task SendMarketDataToClients(MarketData marketData)
+		{
+			await Clients.All.PublishMarketData(marketData);
+		}
 
-		public Task SendClientSubscribtion(string user,string message)
+		public Task SendClientSubscribtion(string message)
 		{
 			Console.WriteLine(message);
 			Console.WriteLine($"Client Connection {Context.ConnectionId}");

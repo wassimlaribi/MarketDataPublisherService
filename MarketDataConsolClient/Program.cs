@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
+﻿using MarketDataPublisherService;
+using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace MarketDataConsolClient
 				.WithUrl("http://localhost:5000/marketDataHub") 
 				.WithAutomaticReconnect() //handel lost connection
 				.Build();
+
 
 			//on close event 
 			connection.Closed += async (error) =>
@@ -41,13 +43,15 @@ namespace MarketDataConsolClient
 				// Notify users the connection was reestablished.
 				// Start dequeuing messages queued while reconnecting if any.
 
+				// get list of tickers 
+
 				return Task.CompletedTask;
 			};
 
 			//on market data notification received 
-			connection.On<object>("MarketDataNotification", (obj) =>
+			connection.On<MarketData>("PublishMarketData", (marketData) =>
 			{
-				Console.WriteLine($"message received {obj}");
+				Console.WriteLine($"message received {marketData}");
 			});
 
 			//Open client server connection
@@ -55,6 +59,8 @@ namespace MarketDataConsolClient
 
 			//call server from client 
 			connection.InvokeAsync("SendClientSubscribtion", "user1", "hello from client");
+
+			
 
 			Console.WriteLine("Hello World!");
 
