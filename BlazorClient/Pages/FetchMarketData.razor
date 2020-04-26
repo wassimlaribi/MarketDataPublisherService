@@ -1,0 +1,94 @@
+﻿@page "/fetchmarketdata"
+
+@using BlazorClient.Data
+@using Microsoft.AspNetCore.SignalR.Client
+@using System.Threading;
+@using System.Diagnostics;
+@using Newtonsoft.Json.Linq;
+
+@inject MarketDataService MarketDataService
+
+
+<h1>Market Data</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Ticket</th>
+				<th>Spot </th>
+				<th>Open </th>
+				<th>Close</th>
+				<th>Update time</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var marketDataPresenter in marketDataPresenters)
+			{
+				<tr>
+					<td>@marketDataPresenter.Ticker</td>
+					<td>@marketDataPresenter.Spot</td>
+					<td>@marketDataPresenter.Open</td>
+					<td>@marketDataPresenter.Close</td>
+					<td>@marketDataPresenter.UpdateTime</td>
+				</tr>
+			}
+		</tbody>
+</table>
+
+@code {
+	private List<MarketData> marketDataPresenters;
+
+	protected override void OnInitialized()
+	{
+		HubConnection connection = new HubConnectionBuilder()
+				.WithUrl("http://localhost:5000/marketDataHub")
+				.WithAutomaticReconnect() //handel lost connection
+				.Build();
+
+
+		Console.WriteLine("Main thread ID" + Thread.CurrentThread.ManagedThreadId);
+
+		//on close event
+		connection.Closed += async (error) =>
+		{
+			await Task.Delay(new Random().Next(0, 5) * 1000);
+			await connection.StartAsync();
+		};
+
+		connection.Reconnecting += error =>
+		{
+			Debug.Assert(connection.State == HubConnectionState.Reconnecting);
+			Debug.WriteLine("Connection lost, trying to reconnect");
+
+			return Task.CompletedTask;
+		};
+
+		connection.Reconnected += connectionId =>
+		{
+			Debug.Assert(connection.State == HubConnectionState.Connected);
+
+			return Task.CompletedTask;
+		};
+
+		marketDataPresenters = new List<MarketData>();
+		//on market data notification received
+		connection.On<List<MarketData>>("PublishMarketDataList", (x) => UpdateStockGrid(x));
+
+		//Open client server connection
+
+		connection.StartAsync();
+	}
+
+	private async void UpdateStockGrid(List<MarketData> marketData)
+	{
+		Console.WriteLine("on market data received thread ID" + Thread.CurrentThread.ManagedThreadId);
+		Console.WriteLine($"message received {marketData.ToString()}");
+
+
+		marketDataPresenters = marketData;
+		await InvokeAsync(() =>
+		{
+			base.StateHasChanged();
+		});
+	}
+}

@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarketDataPublisherService"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarketDataConsolClient", "MarketDataConsolClient\MarketDataConsolClient.csproj", "{2F5569B2-F560-4022-A2B5-64ED30DA0469}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorClient", "BlazorClient\BlazorClient.csproj", "{188A8558-FC87-45A6-A4D8-4A5AE4B0AC7C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{2F5569B2-F560-4022-A2B5-64ED30DA0469}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F5569B2-F560-4022-A2B5-64ED30DA0469}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F5569B2-F560-4022-A2B5-64ED30DA0469}.Release|Any CPU.Build.0 = Release|Any CPU
+		{188A8558-FC87-45A6-A4D8-4A5AE4B0AC7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{188A8558-FC87-45A6-A4D8-4A5AE4B0AC7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{188A8558-FC87-45A6-A4D8-4A5AE4B0AC7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{188A8558-FC87-45A6-A4D8-4A5AE4B0AC7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
