@@ -1,6 +1,7 @@
 ﻿using MarketDataPublisherService.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MarketDataPublisherService
@@ -13,6 +14,11 @@ namespace MarketDataPublisherService
 		public async Task SendMarketDataToClients(MarketData marketData)
 		{
 			await Clients.All.PublishMarketData(marketData);
+		}
+
+		public async Task SendMarketDataListToClients(ICollection<MarketData> marketDataList)
+		{
+			await Clients.All.PublishMarketDataList(marketDataList);
 		}
 
 		public Task SendClientSubscribtion(string message)

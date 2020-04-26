@@ -1,7 +1,7 @@
-﻿using MarketDataPublisherService;
-using Microsoft.AspNetCore.SignalR.Client;
+﻿using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MarketDataConsolClient
@@ -17,6 +17,7 @@ namespace MarketDataConsolClient
 				.WithAutomaticReconnect() //handel lost connection
 				.Build();
 
+			Console.WriteLine("Main thread ID" +Thread.CurrentThread.ManagedThreadId);
 
 			//on close event 
 			connection.Closed += async (error) =>
@@ -30,27 +31,20 @@ namespace MarketDataConsolClient
 				Debug.Assert(connection.State == HubConnectionState.Reconnecting);
 				Debug.WriteLine("Connection lost, trying to reconnect");
 
-				// Notify users the connection was lost and the client is reconnecting.
-				// Start queuing or dropping messages.
-
 				return Task.CompletedTask;
 			};
 
 			connection.Reconnected += connectionId =>
 			{
 				Debug.Assert(connection.State == HubConnectionState.Connected);
-
-				// Notify users the connection was reestablished.
-				// Start dequeuing messages queued while reconnecting if any.
-
-				// get list of tickers 
-
+			
 				return Task.CompletedTask;
 			};
 
 			//on market data notification received 
-			connection.On<MarketData>("PublishMarketData", (marketData) =>
+			connection.On<object>("PublishMarketDataList", (marketData) =>
 			{
+				Console.WriteLine("on market data received thread ID"+Thread.CurrentThread.ManagedThreadId);
 				Console.WriteLine($"message received {marketData}");
 			});
 
@@ -59,7 +53,6 @@ namespace MarketDataConsolClient
 
 			//call server from client 
 			connection.InvokeAsync("SendClientSubscribtion", "user1", "hello from client");
-
 			
 
 			Console.WriteLine("Hello World!");

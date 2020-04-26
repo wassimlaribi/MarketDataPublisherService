@@ -7,7 +7,7 @@ namespace MarketDataPublisherService.Hubs
 {
 	public interface IMarketDataClient
 	{
-		//Task MarketDataNotification(ICollection<MarketData> marketDatas);
 		public Task PublishMarketData(MarketData marketData);
+		public Task PublishMarketDataList(ICollection<MarketData> marketDataCollection);
 	}
 }
