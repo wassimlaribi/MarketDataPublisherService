@@ -31,7 +31,6 @@ public class MarketDataServiceWorker : BackgroundService
             foreach (var marketData in MarketDataList)
             {
                 UpdateSpot(marketData);
-                System.Diagnostics.Trace.WriteLine(marketData.ToString());
                 _logger.LogInformation(marketData.ToString());
             }
 
@@ -45,7 +44,7 @@ public class MarketDataServiceWorker : BackgroundService
     public void UpdateSpot(MarketData marketData)
     {
         marketData.Spot = (decimal)Math.Round(Random.NextDouble() * 1000, 3);
-        marketData.Time = DateTime.Now;
+        marketData.Time = DateTime.Now.ToString("HH:mm:ss");
     }
 
     public void BuildMarketDataDefaultValue()
