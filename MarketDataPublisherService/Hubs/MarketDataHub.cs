@@ -30,14 +30,6 @@ namespace MarketDataPublisherService
 			return Task.FromResult("ok");
 		}
 
-		//public Task SendMessageToCaller(string message)
-		//{
-		//	return Clients.Caller.SendAsync("ReceiveMessage", message);
-		//}
-
-		//public Task SendMessageToGroup(string message)
-		//{
-		//	return Clients.Group("SignalR Users").SendAsync("ReceiveMessage", message);
-		//}
+		
 	}
 }
