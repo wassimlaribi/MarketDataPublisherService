@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace BlazorClient.Data
 {
-	public class MarketDataService
+	public class MarketDataViewPresenter
 	{
 		public event EventHandler MarketDataReceived;
-		public List<MarketData> MarketDataList { get; set; } = new List<MarketData>();
-		public ILogger<MarketDataService> Logger { get; }
+		public List<MarketDataModelPresenter> MarketDataList { get; set; } = new List<MarketDataModelPresenter>();
+		public ILogger<MarketDataViewPresenter> Logger { get; }
 
-		public MarketDataService(ILogger<MarketDataService> logger)
+		public MarketDataViewPresenter(ILogger<MarketDataViewPresenter> logger)
 		{
 			Logger = logger;
 		}
@@ -49,7 +49,7 @@ namespace BlazorClient.Data
 			};
 
 			//on market data notification received
-			connection.On<List<MarketData>>("PublishMarketDataList", (data) => UpdateStockGrid(data));
+			connection.On<List<MarketDataModelPresenter>>("PublishMarketDataList", (data) => UpdateStockGrid(data));
 
 			//Open client server connection
 			connection.StartAsync();
@@ -60,7 +60,7 @@ namespace BlazorClient.Data
 			MarketDataReceived?.Invoke(this, e);
 		}
 
-		private void UpdateStockGrid(List<MarketData> marketData)
+		private void UpdateStockGrid(List<MarketDataModelPresenter> marketData)
 		{
 			Logger.LogInformation("Market data received thread ID" + Thread.CurrentThread.ManagedThreadId);
 

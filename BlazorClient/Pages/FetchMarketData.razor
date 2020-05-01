@@ -2,10 +2,10 @@
 @using BlazorClient.Data
 
 
-@inject MarketDataService MarketDataServicePresenter
+@inject MarketDataViewPresenter MarketDataServicePresenter
 
 
-<h1>Market Data</h1>
+<h1>Live Market Data</h1>
 	<table class="table">
 		<thead>
 			<tr>
@@ -21,7 +21,7 @@
 			{
 				<tr>
 					<td>@marketDataPresenter.Ticker</td>
-					<td>@marketDataPresenter.Spot</td>
+					<td style="background-color:@marketDataPresenter.SpotBackgroundColor" >@marketDataPresenter.Spot</td>
 					<td>@marketDataPresenter.Open</td>
 					<td>@marketDataPresenter.Close</td>
 					<td>@marketDataPresenter.Time</td>
@@ -41,6 +41,7 @@
 	private void MarketDataUpdateHandler(object handler, EventArgs e)
 	{
 		//Refresh grid
-		base.StateHasChanged();
+		InvokeAsync(() => base.StateHasChanged());
+		
 	}
 }

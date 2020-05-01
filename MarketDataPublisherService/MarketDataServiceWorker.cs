@@ -43,7 +43,11 @@ public class MarketDataServiceWorker : BackgroundService
 
     public void UpdateSpot(MarketData marketData)
     {
-        marketData.Spot = (decimal)Math.Round(Random.NextDouble() * 1000, 3);
+        decimal ratio =  (decimal)Random.Next(-2, 2) / 100;
+
+        marketData.PriviousSpot = marketData.Spot;
+        marketData.Spot += ratio == 0 ? 0 :Math.Round(ratio * marketData.Spot,3);
+
         marketData.Time = DateTime.Now.ToString("HH:mm:ss");
     }
 
@@ -53,11 +57,11 @@ public class MarketDataServiceWorker : BackgroundService
             {
                  new MarketData() {Ticker = "700.hk", Spot = 329.60m, Open = 330.60m, Close = 329.60m } ,
 
-                 new MarketData() {Ticker = "939.hk", Spot = 5.94m, Open = 330.60m, Close = 329.60m } ,
+                 new MarketData() {Ticker = "939.hk", Spot = 5.94m, Open = 5.60m, Close = 5.60m } ,
 
-                 new MarketData() {Ticker = "1288.HK", Spot = 3.090m, Open = 330.60m, Close = 329.60m },
+                 new MarketData() {Ticker = "1288.HK", Spot = 3.090m, Open = 3.60m, Close = 3.60m },
 
-                 new MarketData() {Ticker = "005.K", Spot = 40.50m, Open = 330.60m, Close = 329.60m },
+                 new MarketData() {Ticker = "005.K", Spot = 40.50m, Open = 41.60m, Close = 40.60m },
 
                  new MarketData() {Ticker = "MSFT", Spot = 153.50m, Open = 150.60m, Close = 329.60m }
             };

@@ -6,6 +6,8 @@ namespace MarketDataPublisherService
 	{
         public string Ticker { get; set; }
         public decimal Spot { get; set; }
+
+        public decimal PriviousSpot { get; set; }
         public decimal Open { get; set; }
         public decimal Close { get; set; }
 
