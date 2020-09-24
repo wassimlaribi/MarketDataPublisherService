@@ -11,25 +11,11 @@ namespace MarketDataPublisherService
 	//Every hub method call is executed on a new hub instance.
 	public class MarketDataHub : Hub<IMarketDataClient>
 	{
-		public async Task SendMarketDataToClients(MarketData marketData)
-		{
-			await Clients.All.PublishMarketData(marketData);
-		}
 
-		public async Task SendMarketDataListToClients(ICollection<MarketData> marketDataList)
+		public async Task SendMarketDataListToClients(ICollection<MarketDataModel> marketDataList)
 		{
 			await Clients.All.PublishMarketDataList(marketDataList);
 		}
-
-		public Task SendClientSubscribtion(string message)
-		{
-			Console.WriteLine(message);
-			Console.WriteLine($"Client Connection {Context.ConnectionId}");
-			Console.WriteLine($"Client User {Context.User}");
-			Console.WriteLine($"Client Identifier {Context.UserIdentifier}");
-			return Task.FromResult("ok");
-		}
-
 		
 	}
 }

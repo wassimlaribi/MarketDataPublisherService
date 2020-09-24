@@ -2,7 +2,7 @@
 
 namespace MarketDataPublisherService
 {
-	public class MarketData
+	public class MarketDataModel
 	{
         public string Ticker { get; set; }
         public decimal Spot { get; set; }

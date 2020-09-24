@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+
 namespace MarketDataPublisherService
 {
 	public class Startup
@@ -12,6 +13,8 @@ namespace MarketDataPublisherService
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddSignalR();
+
+			services.AddAutoMapper()
 
 			services.AddHostedService<MarketDataServiceWorker>();
 		}

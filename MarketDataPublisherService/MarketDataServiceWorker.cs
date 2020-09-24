@@ -12,7 +12,7 @@ public class MarketDataServiceWorker : BackgroundService
 {
     private readonly ILogger<MarketDataServiceWorker> _logger;
     private readonly IHubContext<MarketDataHub, IMarketDataClient> _marketDataHub;
-    public List<MarketData> MarketDataList { get; set; }
+    public List<MarketDataModel> MarketDataList { get; set; }
     private readonly Random Random = new Random();
 
     public MarketDataServiceWorker(ILogger<MarketDataServiceWorker> logger, IHubContext<MarketDataHub, IMarketDataClient> marketDataHub)
@@ -41,7 +41,7 @@ public class MarketDataServiceWorker : BackgroundService
         }
     }
 
-    public void UpdateSpot(MarketData marketData)
+    public void UpdateSpot(MarketDataModel marketData)
     {
         decimal ratio =  (decimal)Random.Next(-2, 2) / 100;
 
@@ -53,17 +53,17 @@ public class MarketDataServiceWorker : BackgroundService
 
     public void BuildMarketDataDefaultValue()
     {
-        MarketDataList = new List<MarketData>()
+        MarketDataList = new List<MarketDataModel>()
             {
-                 new MarketData() {Ticker = "700.hk", Spot = 329.60m, Open = 330.60m, Close = 329.60m } ,
+                 new MarketDataModel() {Ticker = "700.hk", Spot = 329.60m, Open = 330.60m, Close = 329.60m } ,
 
-                 new MarketData() {Ticker = "939.hk", Spot = 5.94m, Open = 5.60m, Close = 5.60m } ,
+                 new MarketDataModel() {Ticker = "939.hk", Spot = 5.94m, Open = 5.60m, Close = 5.60m } ,
 
-                 new MarketData() {Ticker = "1288.HK", Spot = 3.090m, Open = 3.60m, Close = 3.60m },
+                 new MarketDataModel() {Ticker = "1288.HK", Spot = 3.090m, Open = 3.60m, Close = 3.60m },
 
-                 new MarketData() {Ticker = "005.K", Spot = 40.50m, Open = 41.60m, Close = 40.60m },
+                 new MarketDataModel() {Ticker = "005.K", Spot = 40.50m, Open = 41.60m, Close = 40.60m },
 
-                 new MarketData() {Ticker = "MSFT", Spot = 153.50m, Open = 150.60m, Close = 329.60m }
+                 new MarketDataModel() {Ticker = "MSFT", Spot = 153.50m, Open = 150.60m, Close = 329.60m }
             };
     }
 }
